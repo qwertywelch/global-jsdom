@@ -9,7 +9,7 @@ const defaultHtml = '<!doctype html><html><head><meta charset="utf-8"></head><bo
 
 const KEYS = []
 
-export default function globalJsdom(html = defaultHtml, options = {}) {
+export default function globalJsdom(html = defaultHtml, options = { resources: 'usable' }) {
   // Idempotency
   if (global.navigator
     && global.navigator.userAgent
@@ -20,7 +20,7 @@ export default function globalJsdom(html = defaultHtml, options = {}) {
   }
 
   // set a default url if we don't get one - otherwise things explode when we copy localstorage keys
-  if (!('url' in options)) { Object.assign(options, { url: 'http://localhost:3000' }) }
+  if (!('url' in options)) { Object.assign(options, { url: process.env.JSDOM_URL || 'http://localhost:3000' }) }
 
   // enable pretendToBeVisual by default since react needs
   // window.requestAnimationFrame, see https://github.com/jsdom/jsdom#pretending-to-be-a-visual-browser
